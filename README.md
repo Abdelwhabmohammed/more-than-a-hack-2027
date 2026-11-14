@@ -192,3 +192,61 @@ competition only, under the terms you accept at enrolment.
   url    = {https://github.com/metrica-sports/more-than-a-hack-2027}
 }
 ```
+
+---
+
+## Let's Play - Team Possession Estimator
+
+
+Our team developed a spatial and temporal heuristic pipeline to estimate ball possession for every match frame.
+
+### Pipeline Overview
+
+1. `build_features_dataset.py` - extracts spatial features from tracking data.
+2. `build_temporal_features.py` - generates temporal features using 1-second and 3-second windows.
+3. `prepare_model_features.py` - prepares model features.
+4. `build_possession_estimator_v3.py` - generates candidate possession predictions.
+
+### Setup
+
+Install dependencies:
+
+    pip install -r requirements-starter.txt
+
+Download and extract the competition dataset according to DATA.md and data/README.md.
+
+### Run the Pipeline
+
+Run these commands from the repository root, in order:
+
+    python build_features_dataset.py
+    python build_temporal_features.py
+    python prepare_model_features.py
+    python build_possession_estimator_v3.py
+
+### Generated Files
+
+The pipeline generates these files under data/processed/:
+
+- possession_features.csv
+- temporal_features.csv
+- model_input.csv
+- possession_candidate_v3.csv
+
+### Submission Files
+
+- submission/Let's Play.csv - frame-by-frame possession predictions.
+- submission/Let's Play.md - technical report describing the approach and limitations.
+
+### Submission Validation
+
+    python evaluation/validate_submission.py "submission/Let's Play.csv"
+
+### Current Limitations
+
+- V3.1 is a heuristic estimator, not a supervised machine-learning model.
+- The current estimator does not assign the D (dead ball) label.
+- Temporal features are derived from the same underlying tracking signals and are not fully independent evidence.
+- Passing the submission validator confirms file-format compliance only; it does not establish prediction accuracy or competition performance.
+
+The methodology and limitations are documented in submission/Let's Play.md.
