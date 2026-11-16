@@ -62,3 +62,17 @@ __pycache__/
 venv/
 env/
 .DS_Store
+
+# Local data and generated artifacts
+outputs/
+.ipynb_checkpoints/
+*.parquet
+*.feather
+*.npy
+*.npz
+*_atd.txt
+*_atd.xml
+*_homography.csv
+*_smart_tagging.xml
+*_tactical.mp4
+.env
