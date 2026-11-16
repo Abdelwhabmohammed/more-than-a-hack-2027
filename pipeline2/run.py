@@ -115,14 +115,14 @@ def run_variant(variant="v2", data_dir=None, output_path=None, lam=30.0, method=
 
 def main():
     ap = argparse.ArgumentParser(description="attempt-2 possession pipeline")
-    ap.add_argument("variant", default="v2", choices=VARIANTS)
-    ap.add_argument("data-dir", default=None)
-    ap.add_argument("output", "-o", default=None)
-    ap.add_argument("lam", type=float, default=30.0, help="DP boundary cost (nats); 30 = prior-calibrated default")
-    ap.add_argument("method", default="dp", choices=("dp", "viterbi"))
-    ap.add_argument("min-poss", type=float, default=0.8)
-    ap.add_argument("min-dead", type=float, default=3.0)
-    ap.add_argument("score", action="store_true")
+    ap.add_argument("--variant", default="v2", choices=VARIANTS)
+    ap.add_argument("--data-dir", default=None)
+    ap.add_argument("--output", "-o", default=None)
+    ap.add_argument("--lam", type=float, default=30.0, help="DP boundary cost (nats); 30 = prior-calibrated default")
+    ap.add_argument("--method", default="dp", choices=("dp", "viterbi"))
+    ap.add_argument("--min-poss", type=float, default=0.8)
+    ap.add_argument("--min-dead", type=float, default=3.0)
+    ap.add_argument("--score", action="store_true")
     args = ap.parse_args()
     run_variant(variant=args.variant, data_dir=args.data_dir, output_path=args.output,
                 lam=args.lam, method=args.method, run_scorer=args.score,
