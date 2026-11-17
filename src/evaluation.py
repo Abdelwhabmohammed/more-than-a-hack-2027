@@ -6,7 +6,13 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 
-VALIDATOR = ROOT / "evaluation" / "validate_submission.py"
+VALIDATOR = (
+    ROOT
+    / "official"
+    / "more-than-a-hack-2027"
+    / "evaluation"
+    / "validate_submission.py"
+)
 
 
 def validate_submission(csv_path):
@@ -22,7 +28,7 @@ def validate_submission(csv_path):
             str(VALIDATOR),
             str(csv_path)
         ],
-        cwd=str(ROOT),
+        cwd=str(ROOT / "official" / "more-than-a-hack-2027"),
         capture_output=True,
         text=True
     )

@@ -6,7 +6,7 @@ import numpy as np
 
 ROOT = Path(__file__).resolve().parent.parent
 
-STARTER = ROOT / "starter"
+STARTER = ROOT / "official" / "more-than-a-hack-2027" / "starter"
 
 if str(STARTER) not in sys.path:
     sys.path.insert(0, str(STARTER))

@@ -7,12 +7,13 @@ import numpy as np
 
 ROOT = Path(__file__).resolve().parent.parent
 
-STARTER = ROOT / "starter"
+OFFICIAL = ROOT / "official" / "more-than-a-hack-2027"
+STARTER = OFFICIAL / "starter"
 
 os.environ["MTAH_DATA_DIR"] = str(ROOT / "data" / "raw")
 
-if str(ROOT) not in sys.path:
-    sys.path.insert(0, str(ROOT))
+if str(OFFICIAL) not in sys.path:
+    sys.path.insert(0, str(OFFICIAL))
 
 if str(STARTER) not in sys.path:
     sys.path.insert(0, str(STARTER))
