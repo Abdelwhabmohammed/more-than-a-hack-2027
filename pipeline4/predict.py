@@ -37,7 +37,10 @@ def main():
     change = lgb.Booster(model_file=os.path.join(ROOT, params["model_files"][1]))
 
     table, table_swap = core.challenge_tables()
-    prob, chg = core.predict_probs(frame, change, table, table_swap)
+    missing = [c for c in params["features"] if c not in table.columns]
+    if missing:
+        raise SystemExit("feature table lacks columns the model needs: {}".format(missing[:5]))
+    prob, chg = core.predict_probs(frame, change, table, table_swap, names=list(params["features"]))
 
     # second half is graded from 110808 but kicks off at 113742 so it is all dead
     before_kickoff = (table["half"].values == 2) & \
@@ -58,15 +61,11 @@ def main():
 
     if args.score:
         import subprocess
-        subprocess.run([sys.executable, os.path.join(ROOT, "evaluation",
-                                                     "validate_submission.py"), args.out],
-                       check=False)
-        subprocess.run([sys.executable, os.path.join(ROOT, "evaluation",
-                                                     "run_evaluation.py")], check=False)
+        subprocess.run([sys.executable, os.path.join(ROOT, "evaluation", "validate_submission.py"), args.out], check=False)
+        subprocess.run([sys.executable, os.path.join(ROOT, "evaluation", "run_evaluation.py")], check=False)
 
-
-import possession_metrics as pm  # noqa: E402
-import pipeline4.features as feats  # noqa: E402
+import possession_metrics as pm
+import pipeline4.features as feats
 
 if __name__ == "__main__":
     main()

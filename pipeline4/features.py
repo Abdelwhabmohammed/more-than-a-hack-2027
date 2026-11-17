@@ -443,6 +443,7 @@ def read_atd(raw_path, n_frames, cache_path, rebuild=False):
 
 def challenge_arrays(data_dir=None):
     """(px, py, ps, bx, by, team, half, length, width) for the challenge match."""
+    import starter.baseline
     meta, raw = games.require(["atd_meta", "atd_raw"], GAME, data_dir)
     atd = read_atd(raw, N_FRAMES, os.path.join(HERE, "_cache", "atd_tactical.npz"))
     half = np.zeros(N_FRAMES, dtype=np.int8)

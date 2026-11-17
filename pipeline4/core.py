@@ -33,15 +33,15 @@ ALL_MATCHES = sorted(dfl_data.MATCH_FILES)
 SEED = 20271117
 
 # model settings
-BALL_MODE = "drift"  # fitted drift noise with smoothing
-DEAD_MODE = "real"  # realistic stoppage replay
+BALL_MODE = "drift" # fitted drift noise with smoothing
+DEAD_MODE = "real" # realistic stoppage replay
 SCENARIOS = noise.MATCHED + noise.SCENARIOS  # all scenarios used for training
 JUDGE_SCENARIOS = noise.MATCHED  # scenarios used to judge decoder and stacker
 
-CHANGE_RADIUS = 6  # frames around a direct team change
-FRAME_ALPHA = 0.5  # frame weight based on spell length
+CHANGE_RADIUS = 6 # frames around a direct team change
+FRAME_ALPHA = 0.5 # frame weight based on spell length
 FRAME_MIN_LEN = 5
-CONTROLLED_MIN = 50  # minimum frames for a controlled team run
+CONTROLLED_MIN = 50 # minimum frames for a controlled team run
 STRIDE = 3  # use every third frame to reduce near duplicates
 N_TREES = 400
 SECOND_HALF_KICKOFF = 113742  # second half starts here after dead frames
@@ -174,9 +174,9 @@ def fit_change(matches, n_trees=N_TREES, scenarios=SCENARIOS):
     import lightgbm as lgb
     return lgb.train(CHANGE_PARAMS, lgb.Dataset(x, c), num_boost_round=n_trees)
 
-def predict_probs(frame, change, table, table_swap):
+def predict_probs(frame, change, table, table_swap, names=None):
     """(n, 3) H/A/D and (n,) change probabilities, both sides averaged."""
-    names = feature_names(table)
+    names = names or feature_names(table)
     p = frame.predict(table[names].astype(np.float32))
     q = frame.predict(table_swap[names].astype(np.float32))
     prob = np.clip((p + q[:, [1, 0, 2]]) / 2, 1e-4, 1.0)
@@ -188,9 +188,7 @@ def predict_probs(frame, change, table, table_swap):
         chg = np.full(len(prob), 0.5)
     return prob, chg
 
-
 # decoder with time based team switch costs
-
 @njit(cache=True)
 def viterbi_tv(log_e, team_cost, enter_dead, exit_dead):
     """Most likely H/A/D sequence; changing team between t-1 and t costs team_cost[t]."""
