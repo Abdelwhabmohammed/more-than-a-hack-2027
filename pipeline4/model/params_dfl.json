@@ -60,8 +60,8 @@
   "seen_share_4s"
  ],
  "model_files": [
-  "pipeline4\\model\\lp_dfl_frame.txt",
-  "pipeline4\\model\\lp_dfl_change.txt"
+  "pipeline4/model/lp_dfl_frame.txt",
+  "pipeline4/model/lp_dfl_change.txt"
  ],
  "decoder": {
   "team_a": 20.0,

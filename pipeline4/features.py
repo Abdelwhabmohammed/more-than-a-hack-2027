@@ -449,7 +449,7 @@ def challenge_arrays(data_dir=None):
     for h, first, last in games.half_video_blocks(GAME):
         half[first:last + 1] = h
     return (atd["px"], atd["py"], atd["ps"], atd["bx"], atd["by"],
-            baseline.team_of_each_track(meta), half, PITCH[0], PITCH[1])
+            starter.baseline.team_of_each_track(meta), half, PITCH[0], PITCH[1])
 
 def tagging_columns(data_dir=None):
     """Smart Tagging as per-frame counts; only the challenge match has it."""
